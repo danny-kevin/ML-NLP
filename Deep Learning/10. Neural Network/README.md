@@ -316,6 +316,26 @@ softmax运算解决了以上两个问题。它通过下面的公式将输出值�
 
 [TensorFlow示例：线性回归](https://github.com/NLP-LOVE/ML-NLP/blob/master/Deep%20Learning/10.%20Neural%20Network/TensorFlow_LR.ipynb)
 
+## 8.Batch Normalization在训练和预测两个阶段的区别
+
+核心区别在于：
+1. 在训练时：BN使用的是当前mini-batch的均值和方差来进行归一化
+2. 在预测时：BN使用的是在整个训练集上估算出的全局均值和方差来归一化
+
+## 8.1 训练过程
+### step1:计算当前mini-batch中的m个样本均值和方差。
+### step2:利用刚才计算的样本均值和方差来归一化mini-batch中的每一个样本。
+<img width="164" height="79" alt="image" src="https://github.com/user-attachments/assets/1a86e9ea-698a-4957-85a8-714c3661a9e9" />
+
+### step3:引入缩放和平移，保持模型的表达能力。
+### step4：更新全局统计量，采用移动平均的方式，每次计算得到新的batch的均值和方差之后，使用移动平均公式来更新当前的均值和方差。
+<img width="465" height="115" alt="image" src="https://github.com/user-attachments/assets/98f7753e-c588-418b-8f3f-59eb4297d075" />
+
+
+## 8.2 预测过程
+### step1： 加载训练过程汇总确定好的平移缩放系数以及全局统计量。
+### step2: 使用全局统计量来进行数据归一化。
+### step3: 使用平移和缩放系数来对归一化之后的内容进行平移和缩放。
 ------
 
 > 作者：[@mantchs](https://github.com/NLP-LOVE/ML-NLP)
